@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+#MISE description="Start all UIs"
+
+kubectl config use-context admin@gcorp-main
+
+kubectl port-forward svc/argocd-server -n argocd 8080:80 > /dev/null 2>&1 &
+kubectl port-forward svc/grafana -n grafana 3000:80 > /dev/null 2>&1 &
+
+echo "✅ Done."
+echo "Argo CD UI is available at http://localhost:8080 (username: admin, password: password123123!!!)"
+echo "Grafana UI is available at http://localhost:3000 (username: admin, password: admin)"
+
+# kubectl get secret --namespace default grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo

@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+#MISE description="Stop all UIs"
+
+kubectl config use-context admin@gcorp-main
+pkill -f "kubectl port-forward"
