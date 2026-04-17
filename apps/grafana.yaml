@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: oci://ghcr.io/grafana-community/helm-charts
     chart: grafana
-    targetRevision: 12.1.1
+    targetRevision: 12.1.0
     helm:
       values: |
         adminUser: admin
