@@ -25,6 +25,18 @@ argocd account update-password --port-forward --port-forward-namespace argocd --
 
 kubectl delete secret argocd-initial-admin-secret -n argocd
 
+argocd repo add https://github.com/gpasini/gpcorp-infra.git --insecure --port-forward --port-forward-namespace argocd
+
+argocd app create root-app \
+  --repo https://github.com/gpasini/gpcorp-infra.git \
+  --path root \
+  --revision main \
+  --dest-server https://kubernetes.default.svc \
+  --dest-namespace argocd \
+  --sync-policy automated \
+  --self-heal \
+  --auto-prune
+
 echo "✅ Done. Next steps :"
 echo "1. Run 'mise argo-ui' to open the Argo CD UI and access it at http://localhost:8080"
 echo "2. Login with username 'admin' and password '$NEW_PASSWORD'"
