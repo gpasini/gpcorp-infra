@@ -1,4 +1,5 @@
 [tools]
 argocd = "3.3.7"
+helm = "4.1.4"
 kubectl = "1.35.4"
 talosctl = "1.12.6"
