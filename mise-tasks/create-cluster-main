@@ -35,7 +35,10 @@ argocd app create root-app \
   --dest-namespace argocd \
   --sync-policy automated \
   --self-heal \
-  --auto-prune
+  --auto-prune \
+  --insecure \
+  --port-forward \
+  --port-forward-namespace argocd
 
 echo "✅ Done. Next steps :"
 echo "1. Run 'mise argo-ui' to open the Argo CD UI and access it at http://localhost:8080"
