@@ -1,0 +1,6 @@
+#!/usr/bin/env zsh
+#MISE description="Initialise gpcorp-apps cluster"
+
+talosctl cluster create docker --name gcorp-apps --subnet 10.11.0.0/24
+talosctl config context gcorp-apps
+talosctl config nodes 10.11.0.2 10.11.0.3

@@ -1,0 +1,30 @@
+#!/usr/bin/env zsh
+#MISE description="Initialise gpcorp-main cluster"
+
+talosctl cluster create docker --name gcorp-main --subnet 10.10.0.0/24
+talosctl config context gcorp-main
+talosctl config nodes 10.10.0.2 10.10.0.3
+
+talosctl config context gcorp-admin
+
+kubectl config use-context admin@gcorp-main
+
+kubectl create namespace argocd
+kubectl apply -n argocd --server-side --force-conflicts -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+echo "⏳ Waiting for argocd-server to be ready..."
+kubectl wait --for=condition=ready pod -l app.kubernetes.io/name=argocd-server -n argocd --timeout=300s
+
+NEW_PASSWORD="password123123!!!"
+
+INITIAL_PASSWORD=$(argocd admin initial-password -n argocd | head -n 1)
+
+argocd login --port-forward --port-forward-namespace argocd --username admin --password "$INITIAL_PASSWORD" --insecure argocd-server
+
+argocd account update-password --port-forward --port-forward-namespace argocd --insecure --current-password "$INITIAL_PASSWORD" --new-password "$NEW_PASSWORD"
+
+kubectl delete secret argocd-initial-admin-secret -n argocd
+
+echo "✅ Done. Next steps :"
+echo "1. Run 'mise argo-ui' to open the Argo CD UI and access it at http://localhost:8080"
+echo "2. Login with username 'admin' and password '$NEW_PASSWORD'"

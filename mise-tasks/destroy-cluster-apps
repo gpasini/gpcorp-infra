@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+#MISE description="Delete gpcorp-apps cluster"
+
+kubectl config unset current-context
+talosctl config add talos-default 
+talosctl config context talos-default
+
+talosctl cluster destroy --name gcorp-apps
+talosctl config remove -y gcorp-apps
+kubectl config delete-context admin@gcorp-apps
+kubectl config delete-cluster gcorp-apps
+kubectl config delete-user admin@gcorp-apps

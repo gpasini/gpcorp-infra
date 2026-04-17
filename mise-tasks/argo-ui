@@ -1,0 +1,6 @@
+#!/usr/bin/env zsh
+#MISE description="Open Argo CD UI"
+
+kubectl config use-context admin@gcorp-main
+argocd admin initial-password -n argocd
+kubectl port-forward svc/argocd-server -n argocd 8080:443
