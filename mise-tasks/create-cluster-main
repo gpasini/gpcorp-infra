@@ -27,23 +27,6 @@ kubectl delete secret argocd-initial-admin-secret -n argocd
 
 argocd repo add https://github.com/gpasini/gpcorp-infra.git --insecure --port-forward --port-forward-namespace argocd
 
-# argocd app create root-app \
-#   --repo https://github.com/gpasini/gpcorp-infra.git \
-#   --path root \
-#   --revision main \
-#   --dest-server https://kubernetes.default.svc \
-#   --dest-namespace argocd \
-#   --sync-policy automated \
-#   --self-heal \
-#   --auto-prune \
-#   --insecure \
-#   --port-forward \
-#   --port-forward-namespace argocd
-
-# apply to kubernetes the content on root folder :
-kubectl apply -f ./root/ -n argocd --server-side --force-conflicts
+kubectl apply -f ./argo-cd-setup/ -n argocd --server-side --force-conflicts
 
 echo "✅ Cluster installed."
-
-# TODO : faire un task mise qui apply les manifests du repo. Dans un dossier argo-cd, mettre tout les crds pour setup le repo etc etc
-# ne plus faire de app of apps mais plutot une Application pour chaque tool (ex grafana)
