@@ -10,8 +10,9 @@ spec:
     repoURL: https://charts.jetstack.io
     targetRevision: 1.20.2
     helm:
-      valueFiles:
-      - cert-manager-values.yaml
+      values: |
+        prometheus:
+          enabled: false
   destination:
     server: "https://kubernetes.default.svc"
     namespace: cert-manager
