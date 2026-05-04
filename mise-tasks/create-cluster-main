@@ -27,8 +27,6 @@ kubectl delete secret argocd-initial-admin-secret -n argocd
 
 argocd repo add https://github.com/gpasini/gpcorp-infra.git --insecure --port-forward --port-forward-namespace argocd
 
-kubectl apply -f ./argo-cd-setup/ -n argocd --server-side --force-conflicts
-
-# docker run cloudflare/cloudflared:latest tunnel --no-autoupdate run --token eyJhIjoiMjMwM2Q2MWY3Y2ExNmY0NGQ1NjMyNGRhZDk2MmMzZWYiLCJ0IjoiYWM1YmNhYWItZmYwMS00MjJiLTkzNmMtNjgyY2U2YzkzYWYyIiwicyI6IlltWm1aR1kyTmpJdE1qazFaQzAwT0dOa0xXRTFOekl0TlRjMlkyTTFPVFU1WmpFMyJ9
+kubectl apply -f ./argocd-setup/ -n argocd --server-side --force-conflicts
 
 echo "✅ Cluster installed."

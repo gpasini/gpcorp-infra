@@ -1,4 +1,14 @@
+[settings]
+experimental = true
+
+[hooks]
+enter = "nu"
+
+[env]
+_.path = ["{{config_root}}/bin/gptool"]
+
 [tools]
+"aqua:nushell/nushell" = "0.112.2"
 argocd = "3.3.7"
 helm = "4.1.4"
 kubectl = "1.35.4"

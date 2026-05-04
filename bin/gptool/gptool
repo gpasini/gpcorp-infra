@@ -1,0 +1,21 @@
+#!/usr/bin/env nu
+
+source scripts/kubernetes.nu
+
+def main [] {}
+
+def "main ui start" [] {
+    kubectl config use-context admin@gcorp-main
+
+    kubectl port-forward svc/argocd-server -n argocd 8080:80 > /dev/null out+err> &
+    kubectl port-forward svc/grafana -n grafana 3000:80 > /dev/null out+err> &
+
+    echo "✅ Done."
+    echo "Argo CD UI is available at http://localhost:8080 (username: admin, password: password123123!!!)"
+    echo "Grafana UI is available at http://localhost:3000 (username: admin, password: admin)"
+}
+
+def "main ui stop" [] {
+    kubectl config use-context admin@gcorp-main
+    pkill -f "kubectl port-forward"
+}
